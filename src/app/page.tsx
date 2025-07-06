@@ -40,6 +40,7 @@ import {
   Twitter,
   Youtube,
   ChevronRight,
+  ChevronLeft,
   Check,
   X,
 } from "lucide-react";
@@ -751,6 +752,19 @@ export default function BanyuwangiTourPage() {
     return () => clearInterval(timer);
   }, []);
 
+  // Manual carousel navigation
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
+  const goToPrevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+  };
+
+  const goToNextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+  };
+
   // Scroll animation observer
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -806,16 +820,12 @@ export default function BanyuwangiTourPage() {
       <header
         ref={headerRef}
         id="header"
-        className={`bg-white/95 backdrop-blur-sm sticky top-0 z-50 border-b border-blue-100 transition-all duration-700 ${
-          isVisible('header') ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
-        }`}
+        className="bg-white/95 backdrop-blur-sm sticky top-0 z-50 border-b border-blue-100"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className={`flex items-center space-x-2 transition-all duration-700 delay-200 ${
-              isVisible('header') ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'
-            }`}>
+            <div className="flex items-center space-x-2">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
                 <Car className="w-6 h-6 text-white" />
               </div>
@@ -828,9 +838,7 @@ export default function BanyuwangiTourPage() {
             </div>
 
             {/* Navigation */}
-            <nav className={`hidden md:flex items-center space-x-8 transition-all duration-700 delay-500 ${
-              isVisible('header') ? 'opacity-100' : 'opacity-0'
-            }`}>
+            <nav className="hidden md:flex items-center space-x-8">
               <a
                 href="#home"
                 className="text-gray-700 hover:text-blue-600 transition-colors transform hover:scale-105"
@@ -858,9 +866,7 @@ export default function BanyuwangiTourPage() {
             </nav>
 
             {/* Language Switcher */}
-            <div className={`flex items-center space-x-4 transition-all duration-700 delay-300 ${
-              isVisible('header') ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'
-            }`}>
+            <div className="flex items-center space-x-4">
               <Button
                 onClick={toggleLanguage}
                 variant="outline"
@@ -946,12 +952,27 @@ export default function BanyuwangiTourPage() {
             </div>
           ))}
 
+          {/* Carousel Navigation Arrows */}
+          <button
+            onClick={goToPrevSlide}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-3 transition-all duration-300 z-10 hover:scale-110"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          
+          <button
+            onClick={goToNextSlide}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-3 transition-all duration-300 z-10 hover:scale-110"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+
           {/* Carousel indicators */}
           <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
             {heroImages.map((_, index) => (
               <button
                 key={index}
-                onClick={() => setCurrentSlide(index)}
+                onClick={() => goToSlide(index)}
                 className={`w-3 h-3 rounded-full transition-all ${
                   index === currentSlide ? "bg-white" : "bg-white/50"
                 }`}
@@ -1756,7 +1777,7 @@ export default function BanyuwangiTourPage() {
           <TooltipTrigger asChild>
             <Button
               onClick={() => handleWhatsAppClick()}
-              className="fixed bottom-6 right-6 w-16 h-16 rounded-full bg-gradient-to-br from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 shadow-xl hover:shadow-2xl hover:shadow-green-500/25 z-50 p-0 transform hover:scale-110 transition-all duration-300 animate-pulse hover:animate-none"
+              className="fixed bottom-6 right-6 w-16 h-16 rounded-full bg-gradient-to-br from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 shadow-xl hover:shadow-2xl hover:shadow-green-500/25 z-50 p-0 transform hover:scale-110 transition-all duration-300"
             >
               <MessageCircle className="w-7 h-7 text-white" />
             </Button>
