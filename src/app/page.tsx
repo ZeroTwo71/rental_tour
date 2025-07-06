@@ -729,8 +729,10 @@ export default function BanyuwangiTourPage() {
     null
   );
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [visibleElements, setVisibleElements] = useState<Set<string>>(new Set());
-  
+  const [visibleElements, setVisibleElements] = useState<Set<string>>(
+    new Set()
+  );
+
   // Refs for scroll animations
   const headerRef = useRef<HTMLElement>(null);
   const heroRef = useRef<HTMLElement>(null);
@@ -738,6 +740,7 @@ export default function BanyuwangiTourPage() {
   const packagesRef = useRef<HTMLElement>(null);
   const aboutRef = useRef<HTMLElement>(null);
   const contactRef = useRef<HTMLElement>(null);
+  const mapsRef = useRef<HTMLElement>(null);
 
   const toggleLanguage = () => {
     setLanguage(language === "id" ? "en" : "id");
@@ -758,7 +761,9 @@ export default function BanyuwangiTourPage() {
   };
 
   const goToPrevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+    setCurrentSlide(
+      (prev) => (prev - 1 + heroImages.length) % heroImages.length
+    );
   };
 
   const goToNextSlide = () => {
@@ -771,19 +776,27 @@ export default function BanyuwangiTourPage() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setVisibleElements(prev => new Set([...prev, entry.target.id]));
+            setVisibleElements((prev) => new Set([...prev, entry.target.id]));
           }
         });
       },
       {
         threshold: 0.1,
-        rootMargin: '50px'
+        rootMargin: "50px",
       }
     );
 
     // Observe all sections
-    const sections = [headerRef, heroRef, featuresRef, packagesRef, aboutRef, contactRef];
-    sections.forEach(ref => {
+    const sections = [
+      headerRef,
+      heroRef,
+      featuresRef,
+      packagesRef,
+      aboutRef,
+      contactRef,
+      mapsRef,
+    ];
+    sections.forEach((ref) => {
       if (ref.current) {
         observer.observe(ref.current);
       }
@@ -865,8 +878,8 @@ export default function BanyuwangiTourPage() {
               </a>
             </nav>
 
-            {/* Language Switcher */}
-            <div className="flex items-center space-x-4">
+            {/* Language Switcher & Contact Button */}
+            <div className="flex items-center space-x-2 sm:space-x-4">
               <Button
                 onClick={toggleLanguage}
                 variant="outline"
@@ -874,14 +887,18 @@ export default function BanyuwangiTourPage() {
                 className="flex items-center space-x-2 hover:scale-105 transition-transform"
               >
                 <Globe className="w-4 h-4" />
-                <span>{language === "id" ? "ID" : "EN"}</span>
+                <span className="hidden sm:block">
+                  {language === "id" ? "ID" : "EN"}
+                </span>
               </Button>
               <Button
                 onClick={() => handleWhatsAppClick()}
                 className="bg-green-500 hover:bg-green-600 text-white hover:scale-105 transition-transform"
               >
-                <MessageCircle className="w-4 h-4 mr-2" />
-                {getText("Hubungi Kami", "Contact Us")}
+                <MessageCircle className="w-4 h-4 sm:mr-2" />
+                <span className="hidden sm:block">
+                  {getText("Hubungi Kami", "Contact Us")}
+                </span>
               </Button>
             </div>
           </div>
@@ -889,11 +906,7 @@ export default function BanyuwangiTourPage() {
       </header>
 
       {/* Hero Section with Carousel */}
-      <section
-        ref={heroRef}
-        id="home"
-        className="relative"
-      >
+      <section ref={heroRef} id="home" className="relative">
         <div className="relative w-full h-[70vh] overflow-hidden">
           {heroImages.map((image, index) => (
             <div
@@ -909,22 +922,34 @@ export default function BanyuwangiTourPage() {
                 <div className="absolute inset-0 bg-black/40"></div>
                 <div className="relative z-10 flex items-center justify-center h-full">
                   <div className="text-center text-white px-4">
-                    <h2 className={`text-5xl md:text-6xl font-bold mb-4 transition-all duration-1000 ${
-                      isVisible('home') ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-                    }`}>
+                    <h2
+                      className={`text-5xl md:text-6xl font-bold mb-4 transition-all duration-1000 ${
+                        isVisible("home")
+                          ? "translate-y-0 opacity-100"
+                          : "translate-y-10 opacity-0"
+                      }`}
+                    >
                       {getText("Jelajahi Banyuwangi", "Explore Banyuwangi")}
                     </h2>
-                    <p className={`text-xl md:text-2xl mb-8 max-w-3xl mx-auto transition-all duration-1000 delay-300 ${
-                      isVisible('home') ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-                    }`}>
+                    <p
+                      className={`text-xl md:text-2xl mb-8 max-w-3xl mx-auto transition-all duration-1000 delay-300 ${
+                        isVisible("home")
+                          ? "translate-y-0 opacity-100"
+                          : "translate-y-10 opacity-0"
+                      }`}
+                    >
                       {getText(
                         "Nikmati keindahan alam Banyuwangi dengan paket tour terbaik menggunakan kendaraan Honda yang nyaman dan terpercaya",
                         "Experience the natural beauty of Banyuwangi with the best tour packages using comfortable and reliable Honda vehicles"
                       )}
                     </p>
-                    <div className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-1000 delay-700 ${
-                      isVisible('home') ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-                    }`}>
+                    <div
+                      className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-1000 delay-700 ${
+                        isVisible("home")
+                          ? "translate-y-0 opacity-100"
+                          : "translate-y-10 opacity-0"
+                      }`}
+                    >
                       <Button
                         size="lg"
                         className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold hover:scale-105 transition-transform"
@@ -959,7 +984,7 @@ export default function BanyuwangiTourPage() {
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
-          
+
           <button
             onClick={goToNextSlide}
             className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-3 transition-all duration-300 z-10 hover:scale-110"
@@ -983,15 +1008,15 @@ export default function BanyuwangiTourPage() {
       </section>
 
       {/* Features Section */}
-      <section
-        ref={featuresRef}
-        id="features"
-        className="py-16 bg-white"
-      >
+      <section ref={featuresRef} id="features" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`text-center mb-12 transition-all duration-1000 ${
-            isVisible('features') ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-          }`}>
+          <div
+            className={`text-center mb-12 transition-all duration-1000 ${
+              isVisible("features")
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            }`}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {getText("Mengapa Memilih Kami?", "Why Choose Us?")}
             </h2>
@@ -1004,9 +1029,13 @@ export default function BanyuwangiTourPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className={`text-center p-6 hover:scale-105 transition-all duration-1000 delay-200 ${
-              isVisible('features') ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'
-            }`}>
+            <div
+              className={`text-center p-6 hover:scale-105 transition-all duration-1000 delay-200 ${
+                isVisible("features")
+                  ? "translate-x-0 opacity-100"
+                  : "-translate-x-10 opacity-0"
+              }`}
+            >
               <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Car className="w-8 h-8 text-white" />
               </div>
@@ -1021,9 +1050,13 @@ export default function BanyuwangiTourPage() {
               </p>
             </div>
 
-            <div className={`text-center p-6 hover:scale-105 transition-all duration-1000 delay-400 ${
-              isVisible('features') ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-            }`}>
+            <div
+              className={`text-center p-6 hover:scale-105 transition-all duration-1000 delay-400 ${
+                isVisible("features")
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-10 opacity-0"
+              }`}
+            >
               <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="w-8 h-8 text-white" />
               </div>
@@ -1038,9 +1071,13 @@ export default function BanyuwangiTourPage() {
               </p>
             </div>
 
-            <div className={`text-center p-6 hover:scale-105 transition-all duration-1000 delay-600 ${
-              isVisible('features') ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'
-            }`}>
+            <div
+              className={`text-center p-6 hover:scale-105 transition-all duration-1000 delay-600 ${
+                isVisible("features")
+                  ? "translate-x-0 opacity-100"
+                  : "translate-x-10 opacity-0"
+              }`}
+            >
               <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Star className="w-8 h-8 text-white" />
               </div>
@@ -1065,9 +1102,13 @@ export default function BanyuwangiTourPage() {
         className="py-16 bg-gradient-to-b from-gray-50 to-white"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`text-center mb-12 transition-all duration-1000 ${
-            isVisible('packages') ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-          }`}>
+          <div
+            className={`text-center mb-12 transition-all duration-1000 ${
+              isVisible("packages")
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            }`}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {getText("Paket Tour Populer", "Popular Tour Packages")}
             </h2>
@@ -1084,7 +1125,9 @@ export default function BanyuwangiTourPage() {
               <Card
                 key={pkg.id}
                 className={`group hover:shadow-xl transition-all duration-700 border-0 shadow-lg overflow-hidden flex flex-col h-full ${
-                  isVisible('packages') ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                  isVisible("packages")
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
@@ -1410,16 +1453,16 @@ export default function BanyuwangiTourPage() {
       </section>
 
       {/* About Section */}
-      <section
-        ref={aboutRef}
-        id="about"
-        className="py-16 bg-white"
-      >
+      <section ref={aboutRef} id="about" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className={`transition-all duration-1000 ${
-              isVisible('about') ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'
-            }`}>
+            <div
+              className={`transition-all duration-1000 ${
+                isVisible("about")
+                  ? "translate-x-0 opacity-100"
+                  : "-translate-x-10 opacity-0"
+              }`}
+            >
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
                 {getText("Tentang Banyuwangi Tours", "About Banyuwangi Tours")}
               </h2>
@@ -1471,9 +1514,13 @@ export default function BanyuwangiTourPage() {
                 {getText("Hubungi Kami", "Contact Us")}
               </Button>
             </div>
-            <div className={`relative transition-all duration-1000 delay-300 ${
-              isVisible('about') ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'
-            }`}>
+            <div
+              className={`relative transition-all duration-1000 delay-300 ${
+                isVisible("about")
+                  ? "translate-x-0 opacity-100"
+                  : "translate-x-10 opacity-0"
+              }`}
+            >
               <div className="bg-gradient-to-br from-blue-400 to-green-400 rounded-lg p-8 text-white">
                 <h3 className="text-2xl font-bold mb-4">
                   {getText("Mengapa Honda?", "Why Honda?")}
@@ -1530,9 +1577,13 @@ export default function BanyuwangiTourPage() {
         className="py-16 bg-gradient-to-b from-gray-50 to-white"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`text-center mb-12 transition-all duration-1000 ${
-            isVisible('contact') ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-          }`}>
+          <div
+            className={`text-center mb-12 transition-all duration-1000 ${
+              isVisible("contact")
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            }`}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {getText("Hubungi Kami", "Contact Us")}
             </h2>
@@ -1545,9 +1596,13 @@ export default function BanyuwangiTourPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className={`text-center p-6 border-0 shadow-lg transition-all duration-1000 delay-200 ${
-              isVisible('contact') ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-            }`}>
+            <Card
+              className={`text-center p-6 border-0 shadow-lg transition-all duration-1000 delay-200 ${
+                isVisible("contact")
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-10 opacity-0"
+              }`}
+            >
               <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Phone className="w-8 h-8 text-white" />
               </div>
@@ -1568,9 +1623,13 @@ export default function BanyuwangiTourPage() {
               </Button>
             </Card>
 
-            <Card className={`text-center p-6 border-0 shadow-lg transition-all duration-1000 delay-400 ${
-              isVisible('contact') ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-            }`}>
+            <Card
+              className={`text-center p-6 border-0 shadow-lg transition-all duration-1000 delay-400 ${
+                isVisible("contact")
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-10 opacity-0"
+              }`}
+            >
               <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <MessageCircle className="w-8 h-8 text-white" />
               </div>
@@ -1589,9 +1648,13 @@ export default function BanyuwangiTourPage() {
               </Button>
             </Card>
 
-            <Card className={`text-center p-6 border-0 shadow-lg transition-all duration-1000 delay-600 ${
-              isVisible('contact') ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-            }`}>
+            <Card
+              className={`text-center p-6 border-0 shadow-lg transition-all duration-1000 delay-600 ${
+                isVisible("contact")
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-10 opacity-0"
+              }`}
+            >
               <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Mail className="w-8 h-8 text-white" />
               </div>
@@ -1611,6 +1674,162 @@ export default function BanyuwangiTourPage() {
                 info@banyuwangitours.com
               </Button>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Google Maps Location Section */}
+      <section
+        ref={mapsRef}
+        id="maps"
+        className="py-16 bg-gradient-to-b from-white to-gray-50"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div
+            className={`text-center mb-12 transition-all duration-1000 ${
+              isVisible("maps")
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            }`}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              {getText("Lokasi Kami", "Our Location")}
+            </h2>
+            <p className="text-xl text-gray-600">
+              {getText(
+                "Temukan lokasi kantor kami di Banyuwangi",
+                "Find our office location in Banyuwangi"
+              )}
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8 items-start">
+            {/* Location Info */}
+            <div
+              className={`space-y-6 transition-all duration-1000 delay-200 ${
+                isVisible("maps")
+                  ? "translate-x-0 opacity-100"
+                  : "-translate-x-10 opacity-0"
+              }`}
+            >
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+                  {getText("Kantor Pusat", "Head Office")}
+                </h3>
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <MapPin className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="text-gray-700 font-medium">
+                        {getText("Alamat", "Address")}
+                      </p>
+                      <p className="text-gray-600">
+                        Jl. Raya Banyuwangi-Situbondo No.123
+                        <br />
+                        Banyuwangi, Jawa Timur 68411
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <Phone className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="text-gray-700 font-medium">
+                        {getText("Telepon", "Phone")}
+                      </p>
+                      <p className="text-gray-600">+62 812-3456-7890</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <Clock className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="text-gray-700 font-medium">
+                        {getText("Jam Operasional", "Operating Hours")}
+                      </p>
+                      <p className="text-gray-600">
+                        {getText(
+                          "Senin - Minggu: 08:00 - 20:00",
+                          "Monday - Sunday: 08:00 - 20:00"
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-blue-500 to-green-500 p-6 rounded-lg text-white">
+                <h4 className="text-xl font-semibold mb-3">
+                  {getText("Mudah Dijangkau", "Easy to Reach")}
+                </h4>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-center space-x-2">
+                    <Check className="w-4 h-4 flex-shrink-0" />
+                    <span>
+                      {getText(
+                        "5 menit dari Terminal Brawijaya",
+                        "5 minutes from Brawijaya Terminal"
+                      )}
+                    </span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <Check className="w-4 h-4 flex-shrink-0" />
+                    <span>
+                      {getText(
+                        "10 menit dari Pelabuhan Ketapang",
+                        "10 minutes from Ketapang Port"
+                      )}
+                    </span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <Check className="w-4 h-4 flex-shrink-0" />
+                    <span>
+                      {getText(
+                        "15 menit dari Stasiun Banyuwangi",
+                        "15 minutes from Banyuwangi Station"
+                      )}
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Google Maps */}
+            <div
+              className={`transition-all duration-1000 delay-400 ${
+                isVisible("maps")
+                  ? "translate-x-0 opacity-100"
+                  : "translate-x-10 opacity-0"
+              }`}
+            >
+              <div className="bg-white p-4 rounded-lg shadow-lg">
+                <div className="w-full h-96 rounded-lg overflow-hidden">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3948.941159322541!2d114.3730586!3d-8.208672400000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd14525ac131ddd%3A0x7976c8eae6642bab!2sJl.%20Raya%20Banyuwangi%20Situbondo%20No.123%2C%20Kepatihan%2C%20Kec.%20Banyuwangi%2C%20Kabupaten%20Banyuwangi%2C%20Jawa%20Timur%2068411!5e0!3m2!1sen!2sid!4v1751806034804!5m2!1sen!2sid"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="rounded-lg"
+                  ></iframe>
+                </div>
+                <div className="mt-4 flex justify-center">
+                  <Button
+                    onClick={() =>
+                      window.open(
+                        "https://maps.google.com/?q=Banyuwangi,+East+Java",
+                        "_blank"
+                      )
+                    }
+                    variant="outline"
+                    className="hover:bg-blue-50 hover:border-blue-300"
+                  >
+                    <MapPin className="w-4 h-4 mr-2" />
+                    {getText("Buka di Google Maps", "Open in Google Maps")}
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
