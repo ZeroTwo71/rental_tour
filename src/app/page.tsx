@@ -1808,7 +1808,6 @@ export default function BanyuwangiTourPage() {
                     height="100%"
                     style={{ border: 0 }}
                     allowFullScreen
-                    
                     referrerPolicy="no-referrer-when-downgrade"
                     className="rounded-lg"
                   ></iframe>
