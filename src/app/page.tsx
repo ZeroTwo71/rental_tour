@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -1141,10 +1142,13 @@ export default function BanyuwangiTourPage() {
 
                 <div className="relative">
                   <AspectRatio ratio={16 / 9}>
-                    <img
+                    <Image
                       src={pkg.thumbnail}
                       alt={getText(pkg.name, pkg.nameEn)}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      priority={index === 0} // Optional: untuk gambar pertama
                     />
                   </AspectRatio>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -1229,13 +1233,15 @@ export default function BanyuwangiTourPage() {
                             <div className="grid md:grid-cols-2 gap-6">
                               <div>
                                 <AspectRatio ratio={16 / 9}>
-                                  <img
+                                  <Image
                                     src={selectedPackage.thumbnail}
                                     alt={getText(
                                       selectedPackage.name,
                                       selectedPackage.nameEn
                                     )}
-                                    className="w-full h-full object-cover rounded-lg"
+                                    fill
+                                    className="object-cover rounded-lg"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                   />
                                 </AspectRatio>
                               </div>
