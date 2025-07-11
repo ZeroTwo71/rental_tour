@@ -1,6 +1,10 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { MarqueeReview } from "@/components/sections/MarqueeReview";
+import { BorderBeam } from "@/components/magicui/border-beam";
+import { AuroraText } from "@/components/magicui/aurora-text";
+import { NumberTicker } from "@/components/magicui/number-ticker";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import {
@@ -35,11 +39,6 @@ import {
   Calendar,
   Car,
   Globe,
-  MessageCircle,
-  Facebook,
-  Instagram,
-  Twitter,
-  Youtube,
   ChevronRight,
   ChevronLeft,
   Check,
@@ -718,9 +717,9 @@ const tourPackages: TourPackage[] = [
 ];
 
 const heroImages = [
+  "https://images.unsplash.com/photo-1571228393998-86891c770206?w=800&h=450&fit=crop",
   "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=800&h=450&fit=crop",
   "https://images.unsplash.com/photo-1629735990937-8c24ffd1a413?w=800&h=450&fit=crop",
-  "https://images.unsplash.com/photo-1571228393998-86891c770206?w=800&h=450&fit=crop",
   "https://images.unsplash.com/photo-1640399562300-83bd313ef9a9?w=800&h=450&fit=crop",
 ];
 
@@ -840,11 +839,15 @@ export default function BanyuwangiTourPage() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
-                <Car className="w-6 h-6 text-white" />
-              </div>
+              <Image
+                src="/logo.png"
+                alt="Banyuwangi Tours Logo"
+                width={80}
+                height={30}
+                className="mb-1 object-contain"
+              />
               <div>
-                <h1 className="text-xl font-bold text-gray-900">
+                <h1 className="text-xxl font-bold text-gray-900">
                   Banyuwangi Tours
                 </h1>
                 <p className="text-xs text-gray-500">Honda Rental & Tour</p>
@@ -881,22 +884,30 @@ export default function BanyuwangiTourPage() {
 
             {/* Language Switcher & Contact Button */}
             <div className="flex items-center space-x-2 sm:space-x-4">
+              {/* Language Button */}
               <Button
                 onClick={toggleLanguage}
                 variant="outline"
                 size="sm"
-                className="flex items-center space-x-2 hover:scale-105 transition-transform"
+                className="flex items-center justify-center gap-2 hover:scale-105 transition-transform"
               >
                 <Globe className="w-4 h-4" />
                 <span className="hidden sm:block">
                   {language === "id" ? "ID" : "EN"}
                 </span>
               </Button>
+
+              {/* WhatsApp Contact Button */}
               <Button
                 onClick={() => handleWhatsAppClick()}
-                className="bg-green-500 hover:bg-green-600 text-white hover:scale-105 transition-transform"
+                className="bg-green-500 hover:bg-green-600 text-white flex items-center justify-center gap-2 px-3 py-2 text-sm hover:scale-105 transition-transform"
               >
-                <MessageCircle className="w-4 h-4 sm:mr-2" />
+                <Image
+                  src="/whatsapp.svg"
+                  alt="WhatsApp Icon"
+                  width={16}
+                  height={16}
+                />
                 <span className="hidden sm:block">
                   {getText("Hubungi Kami", "Contact Us")}
                 </span>
@@ -930,10 +941,11 @@ export default function BanyuwangiTourPage() {
                           : "translate-y-10 opacity-0"
                       }`}
                     >
-                      {getText("Jelajahi Banyuwangi", "Explore Banyuwangi")}
+                      {getText("JELAJAHI", "EXPOLORE")}{" "}
+                      <AuroraText>BANYUWANGI</AuroraText>
                     </h2>
                     <p
-                      className={`text-xl md:text-2xl mb-8 max-w-3xl mx-auto transition-all duration-1000 delay-300 ${
+                      className={`text-base md:text-lg mb-8 max-w-3xl mx-auto transition-all duration-1000 delay-300 ${
                         isVisible("home")
                           ? "translate-y-0 opacity-100"
                           : "translate-y-10 opacity-0"
@@ -968,7 +980,13 @@ export default function BanyuwangiTourPage() {
                         className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 text-lg font-semibold border-2 border-green-500 hover:border-green-600 hover:scale-105 transition-transform"
                         onClick={() => handleWhatsAppClick()}
                       >
-                        <MessageCircle className="w-5 h-5 mr-2" />
+                        <Image
+                          src="/whatsapp.svg"
+                          alt="WhatsApp Icon"
+                          width={16}
+                          height={16}
+                          className="mr-2"
+                        />
                         {getText("Konsultasi Gratis", "Free Consultation")}
                       </Button>
                     </div>
@@ -1429,7 +1447,13 @@ export default function BanyuwangiTourPage() {
                                 }
                                 className="bg-white text-green-600 hover:bg-gray-100"
                               >
-                                <MessageCircle className="w-4 h-4 mr-2" />
+                                <Image
+                                  src="/whatsapp.svg"
+                                  alt="WhatsApp Icon"
+                                  width={16}
+                                  height={16}
+                                  className="mr-2"
+                                />
                                 {getText(
                                   "Booking via WhatsApp",
                                   "Book via WhatsApp"
@@ -1447,7 +1471,13 @@ export default function BanyuwangiTourPage() {
                       }
                       className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700"
                     >
-                      <MessageCircle className="w-4 h-4 mr-2" />
+                      <Image
+                        src="/whatsapp.svg"
+                        alt="WhatsApp Icon"
+                        width={16}
+                        height={16}
+                        className="mr-2"
+                      />
                       {getText("Booking", "Book Now")}
                     </Button>
                   </div>
@@ -1479,30 +1509,50 @@ export default function BanyuwangiTourPage() {
                 )}
               </p>
               <div className="grid grid-cols-2 gap-6 mb-8">
+                {/* Wisatawan Puas */}
                 <div>
                   <div className="text-3xl font-bold text-blue-600 mb-2">
-                    1000+
+                    <NumberTicker
+                      value={1000}
+                      className="text-3xl font-bold text-blue-600"
+                    />
+                    +
                   </div>
                   <div className="text-sm text-gray-600">
                     {getText("Wisatawan Puas", "Satisfied Tourists")}
                   </div>
                 </div>
+
+                {/* Destinasi Tour */}
                 <div>
                   <div className="text-3xl font-bold text-blue-600 mb-2">
-                    50+
+                    <NumberTicker
+                      value={50}
+                      className="text-3xl font-bold text-blue-600"
+                    />
+                    +
                   </div>
                   <div className="text-sm text-gray-600">
                     {getText("Destinasi Tour", "Tour Destinations")}
                   </div>
                 </div>
+
+                {/* Rating Pelanggan */}
                 <div>
-                  <div className="text-3xl font-bold text-blue-600 mb-2">
-                    4.8/5
+                  <div className="text-3xl font-bold text-blue-600 mb-2 flex items-center gap-1">
+                    <NumberTicker
+                      value={4.8}
+                      decimalPlaces={1}
+                      className="text-3xl font-bold text-blue-600"
+                    />
+                    /5
                   </div>
                   <div className="text-sm text-gray-600">
                     {getText("Rating Pelanggan", "Customer Rating")}
                   </div>
                 </div>
+
+                {/* Layanan Pelanggan */}
                 <div>
                   <div className="text-3xl font-bold text-blue-600 mb-2">
                     24/7
@@ -1516,7 +1566,13 @@ export default function BanyuwangiTourPage() {
                 onClick={() => handleWhatsAppClick()}
                 className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700"
               >
-                <MessageCircle className="w-4 h-4 mr-2" />
+                <Image
+                  src="/whatsapp.svg"
+                  alt="WhatsApp Icon"
+                  width={16}
+                  height={16}
+                  className="mr-2"
+                />
                 {getText("Hubungi Kami", "Contact Us")}
               </Button>
             </div>
@@ -1576,6 +1632,9 @@ export default function BanyuwangiTourPage() {
         </div>
       </section>
 
+      {/* Marquee Review Section */}
+      <MarqueeReview />
+
       {/* Contact Section */}
       <section
         ref={contactRef}
@@ -1627,6 +1686,18 @@ export default function BanyuwangiTourPage() {
               >
                 +62 812-3456-7890
               </Button>
+              <BorderBeam
+                duration={6}
+                size={400}
+                className="from-transparent via-red-500 to-transparent"
+              />
+              <BorderBeam
+                duration={6}
+                delay={3}
+                size={400}
+                borderWidth={2}
+                className="from-transparent via-blue-500 to-transparent"
+              />
             </Card>
 
             <Card
@@ -1637,7 +1708,12 @@ export default function BanyuwangiTourPage() {
               }`}
             >
               <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MessageCircle className="w-8 h-8 text-white" />
+                <Image
+                  src="/whatsapp.svg"
+                  alt="WhatsApp Icon"
+                  width={32}
+                  height={32}
+                />
               </div>
               <h3 className="text-xl font-semibold mb-2">WhatsApp</h3>
               <p className="text-gray-600 mb-4">
@@ -1652,6 +1728,18 @@ export default function BanyuwangiTourPage() {
               >
                 {getText("Chat Sekarang", "Chat Now")}
               </Button>
+              <BorderBeam
+                duration={6}
+                size={400}
+                className="from-transparent via-red-500 to-transparent"
+              />
+              <BorderBeam
+                duration={6}
+                delay={3}
+                size={400}
+                borderWidth={2}
+                className="from-transparent via-blue-500 to-transparent"
+              />
             </Card>
 
             <Card
@@ -1679,6 +1767,18 @@ export default function BanyuwangiTourPage() {
               >
                 info@banyuwangitours.com
               </Button>
+              <BorderBeam
+                duration={6}
+                size={400}
+                className="from-transparent via-red-500 to-transparent"
+              />
+              <BorderBeam
+                duration={6}
+                delay={3}
+                size={400}
+                borderWidth={2}
+                className="from-transparent via-blue-500 to-transparent"
+              />
             </Card>
           </div>
         </div>
@@ -1829,7 +1929,13 @@ export default function BanyuwangiTourPage() {
                     variant="outline"
                     className="hover:bg-blue-50 hover:border-blue-300"
                   >
-                    <MapPin className="w-4 h-4 mr-2" />
+                    <Image
+                      src="/whatsapp.svg"
+                      alt="WhatsApp Icon"
+                      width={16}
+                      height={16}
+                      className="mr-2"
+                    />
                     {getText("Buka di Google Maps", "Open in Google Maps")}
                   </Button>
                 </div>
@@ -1866,7 +1972,12 @@ export default function BanyuwangiTourPage() {
                   className="w-10 h-10 p-0 border-gray-600 text-gray-400 hover:text-white hover:border-blue-500 hover:bg-blue-500/10 hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-110"
                   onClick={() => window.open("https://facebook.com", "_blank")}
                 >
-                  <Facebook className="w-5 h-5" />
+                  <Image
+                    src="/facebook.svg"
+                    alt="Facebook Icon"
+                    width={24}
+                    height={24}
+                  />
                 </Button>
                 <Button
                   size="sm"
@@ -1874,7 +1985,12 @@ export default function BanyuwangiTourPage() {
                   className="w-10 h-10 p-0 border-gray-600 text-gray-400 hover:text-white hover:border-pink-500 hover:bg-pink-500/10 hover:shadow-lg hover:shadow-pink-500/25 transition-all duration-300 transform hover:scale-110"
                   onClick={() => window.open("https://instagram.com", "_blank")}
                 >
-                  <Instagram className="w-5 h-5" />
+                  <Image
+                    src="/instagram.svg"
+                    alt="Instagram Icon"
+                    width={24}
+                    height={24}
+                  />
                 </Button>
                 <Button
                   size="sm"
@@ -1882,7 +1998,12 @@ export default function BanyuwangiTourPage() {
                   className="w-10 h-10 p-0 border-gray-600 text-gray-400 hover:text-white hover:border-blue-400 hover:bg-blue-400/10 hover:shadow-lg hover:shadow-blue-400/25 transition-all duration-300 transform hover:scale-110"
                   onClick={() => window.open("https://twitter.com", "_blank")}
                 >
-                  <Twitter className="w-5 h-5" />
+                  <Image
+                    src="/twitter.svg"
+                    alt="Twitter Icon"
+                    width={24}
+                    height={24}
+                  />
                 </Button>
                 <Button
                   size="sm"
@@ -1890,7 +2011,12 @@ export default function BanyuwangiTourPage() {
                   className="w-10 h-10 p-0 border-gray-600 text-gray-400 hover:text-white hover:border-red-500 hover:bg-red-500/10 hover:shadow-lg hover:shadow-red-500/25 transition-all duration-300 transform hover:scale-110"
                   onClick={() => window.open("https://youtube.com", "_blank")}
                 >
-                  <Youtube className="w-5 h-5" />
+                  <Image
+                    src="/youtube.svg"
+                    alt="Youtube Icon"
+                    width={24}
+                    height={24}
+                  />
                 </Button>
               </div>
             </div>
@@ -1988,7 +2114,7 @@ export default function BanyuwangiTourPage() {
 
           <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
             <p>
-              © 2024 Banyuwangi Tours.{" "}
+              © 2025 Banyuwangi Tours.{" "}
               {getText("Semua hak dilindungi", "All rights reserved")}.
             </p>
           </div>
@@ -2001,9 +2127,14 @@ export default function BanyuwangiTourPage() {
           <TooltipTrigger asChild>
             <Button
               onClick={() => handleWhatsAppClick()}
-              className="fixed bottom-6 right-6 w-16 h-16 rounded-full bg-gradient-to-br from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 shadow-xl hover:shadow-2xl hover:shadow-green-500/25 z-50 p-0 transform hover:scale-110 transition-all duration-300"
+              className="fixed bottom-6 right-6 w-16 h-16 rounded-full bg-gradient-to-br from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 shadow-xl hover:shadow-2xl hover:shadow-green-500/25 z-50 p-0 transform hover:scale-110 transition-all duration-300 flex items-center justify-center"
             >
-              <MessageCircle className="w-7 h-7 text-white" />
+              <Image
+                src="/whatsapp.svg"
+                alt="WhatsApp Icon"
+                width={28}
+                height={28}
+              />
             </Button>
           </TooltipTrigger>
           <TooltipContent
